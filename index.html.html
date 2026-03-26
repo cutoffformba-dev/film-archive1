@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FILM ARCHIVE</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--w:240px;--white:#ffffff;--off:#f7f5f2;--paper:#f2ede8;--ink:#111111;--ink3:#666666;--line:#dddddd;--red:#e8291c;--red2:#c01a0e;--yellow:#f5d832;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--white);color:var(--ink);display:flex;min-height:100vh;font-size:13px;line-height:1.6;}
+nav{width:var(--w);background:var(--ink);min-height:100vh;position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:100;border-right:3px solid var(--red);}
+.nav-masthead{padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,0.08);}
+.nav-title{font-family:'Bebas Neue',sans-serif;font-size:34px;color:#fff;letter-spacing:0.08em;line-height:1;}
+.nav-issue{font-size:10px;color:var(--red);letter-spacing:0.2em;text-transform:uppercase;margin-top:4px;}
+.nav-section{padding:18px 0 6px;}
+.nav-section-lbl{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.2);padding:0 20px;margin-bottom:2px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;cursor:pointer;color:rgba(255,255,255,0.4);font-size:12px;font-weight:300;letter-spacing:0.04em;transition:all 0.12s;border-left:3px solid transparent;margin-left:-3px;}
+.nav-item:hover{color:rgba(255,255,255,0.8);background:rgba(255,255,255,0.04);}
+.nav-item.active{color:#fff;border-left-color:var(--red);background:rgba(232,41,28,0.08);}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0;opacity:0.6;}
+.nav-footer{margin-top:auto;padding:16px 20px;border-top:1px solid rgba(255,255,255,0.08);}
+.nav-stats{display:flex;flex-direction:column;gap:6px;}
+.nav-stat{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,0.25);}
+.nav-stat-val{color:rgba(255,255,255,0.5);font-weight:500;}
+main{margin-left:var(--w);flex:1;background:var(--white);}
+.page{display:none;}.page.active{display:block;}
+.topbar{background:var(--white);border-bottom:2px solid var(--ink);padding:0 40px;display:flex;align-items:stretch;min-height:72px;}
+.topbar-left{flex:1;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--line);padding-right:32px;}
+.topbar-en{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:0.06em;line-height:1;}
+.topbar-zh{font-size:11px;color:var(--ink3);letter-spacing:0.08em;margin-top:2px;}
+.topbar-right{display:flex;align-items:center;padding-left:28px;}
+.btn-add{display:flex;align-items:center;gap:6px;padding:10px 22px;background:var(--red);color:#fff;border:none;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:0.1em;cursor:pointer;transition:background 0.12s;}
+.btn-add:hover{background:var(--red2);}
+.content{padding:32px 40px 60px;}
+.dash-hero{background:var(--ink);color:#fff;padding:32px 36px;margin-bottom:32px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;}
+.dash-hero-label{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--red);margin-bottom:8px;}
+.dash-hero-value{font-family:'Bebas Neue',sans-serif;font-size:56px;line-height:1;letter-spacing:0.04em;}
+.dash-hero-sub{font-size:12px;color:rgba(255,255,255,0.4);margin-top:6px;}
+.dash-hero-right{text-align:right;}
+.dash-hero-avg-label{font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:0.15em;text-transform:uppercase;}
+.dash-hero-avg{font-family:'Libre Baskerville',serif;font-size:22px;color:var(--yellow);font-style:italic;}
+.dash-row{display:grid;grid-template-columns:repeat(3,1fr);border:2px solid var(--ink);margin-bottom:32px;}
+.dash-cell{padding:20px 24px;border-right:2px solid var(--ink);}
+.dash-cell:last-child{border-right:none;}
+.dash-cell-label{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px;}
+.dash-cell-value{font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:0.04em;line-height:1;}
+.dash-cell-sub{font-size:11px;color:var(--ink3);margin-top:4px;}
+.dash-section-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:0.12em;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:16px;}
+.section-header{display:flex;align-items:baseline;gap:12px;margin-bottom:24px;border-bottom:2px solid var(--ink);padding-bottom:10px;}
+.section-count{font-family:'Bebas Neue',sans-serif;font-size:15px;color:var(--red);letter-spacing:0.1em;}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:0;border:2px solid var(--ink);}
+.camera-card{border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);position:relative;background:var(--white);transition:background 0.1s;}
+.camera-card:hover{background:var(--off);}
+.cam-img{height:170px;background:var(--paper);display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;position:relative;border-bottom:2px solid var(--ink);}
+.cam-img img{width:100%;height:100%;object-fit:cover;}
+.cam-img-ph{display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--ink3);font-size:11px;letter-spacing:0.08em;}
+.cam-img-ph-icon{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.05em;color:var(--line);}
+.img-hover-label{position:absolute;inset:0;background:rgba(17,17,17,0.65);display:flex;align-items:center;justify-content:center;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#fff;opacity:0;transition:opacity 0.15s;}
+.cam-img:hover .img-hover-label{opacity:1;}
+.cam-body{padding:16px 18px;}
+.cam-type-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.cam-type{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink3);}
+.status-pill{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:2px 7px;}
+.status-active{background:var(--ink);color:#fff;}
+.status-shelf{background:var(--line);color:var(--ink3);}
+.cam-name{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:0.04em;line-height:1.1;margin-bottom:12px;}
+.cam-spec-row{display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid var(--line);}
+.cam-spec-k{color:var(--ink3);}
+.cam-spec-v{font-weight:500;}
+.cam-price{margin-top:12px;font-family:'Libre Baskerville',serif;font-size:15px;font-style:italic;color:var(--ink3);}
+.film-card{border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);position:relative;background:var(--white);}
+.film-img{height:150px;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;position:relative;border-bottom:2px solid var(--ink);}
+.film-img img{width:100%;height:100%;object-fit:cover;}
+.film-color-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;}
+.film-color-name{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.06em;color:rgba(255,255,255,0.85);text-align:center;padding:0 8px;line-height:1.2;}
+.film-color-brand{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.5);}
+.film-img:hover .img-hover-label{opacity:1;}
+.film-body{padding:14px 16px;}
+.film-tags{display:flex;gap:6px;margin-bottom:8px;align-items:center;}
+.film-tag{font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:2px 6px;font-weight:500;}
+.tag-color{background:var(--yellow);color:var(--ink);}
+.tag-bw{background:var(--ink);color:#fff;}
+.tag-slide{background:var(--red);color:#fff;}
+.tag-instant{background:var(--paper);color:var(--ink);border:1px solid var(--line);}
+.film-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.04em;margin-bottom:2px;line-height:1;}
+.film-meta{font-size:11px;color:var(--ink3);}
+.film-footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid var(--line);}
+.film-stock{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:0.06em;}
+.film-stock.zero{color:var(--red);}
+.film-price-sm{font-size:11px;color:var(--ink3);}
+.card-del{position:absolute;top:8px;right:8px;background:var(--red);border:none;color:#fff;width:20px;height:20px;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.12s;}
+.camera-card:hover .card-del,.film-card:hover .card-del{opacity:1;}
+.roll-wrap{border:2px solid var(--ink);overflow:hidden;}
+.roll-table{width:100%;border-collapse:collapse;}
+.roll-table th{text-align:left;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:#fff;background:var(--ink);padding:11px 16px;font-weight:400;}
+.roll-table td{padding:13px 16px;border-bottom:1px solid var(--line);font-size:13px;vertical-align:middle;}
+.roll-table tr:last-child td{border-bottom:none;}
+.roll-table tr:hover td{background:var(--off);}
+.roll-no{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--line);letter-spacing:0.06em;}
+.roll-film-name{font-weight:500;}
+.roll-film-note{font-size:11px;color:var(--ink3);margin-top:1px;}
+.dev-tag{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:3px 8px;font-weight:500;}
+.dev-scan{background:var(--ink);color:#fff;}
+.dev-done{background:var(--yellow);color:var(--ink);}
+.dev-pending{background:var(--line);color:var(--ink3);}
+.del-row{background:none;border:none;cursor:pointer;font-size:12px;color:var(--line);padding:4px 8px;transition:color 0.12s;}
+.del-row:hover{color:var(--red);}
+.empty-state{grid-column:1/-1;padding:48px 32px;text-align:center;}
+.empty-state-title{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:0.1em;color:var(--line);margin-bottom:6px;}
+.empty-state-sub{font-size:12px;color:var(--ink3);}
+.overlay{display:none;position:fixed;inset:0;background:rgba(17,17,17,0.75);z-index:300;align-items:center;justify-content:center;padding:24px;}
+.overlay.show{display:flex;}
+.overlay-box{background:var(--white);border:2px solid var(--ink);padding:32px;width:100%;max-width:460px;max-height:90vh;overflow-y:auto;}
+.overlay-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.08em;border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:22px;}
+.form-g{margin-bottom:14px;}
+.form-l{display:block;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink3);margin-bottom:5px;}
+.form-i,.form-s,.form-ta{width:100%;background:var(--off);border:1px solid var(--line);border-bottom:2px solid var(--ink);color:var(--ink);font-family:'Noto Sans TC',sans-serif;font-size:13px;padding:9px 12px;border-radius:0;outline:none;transition:border-color 0.12s;}
+.form-i:focus,.form-s:focus,.form-ta:focus{border-color:var(--red);background:var(--white);}
+.form-ta{resize:vertical;min-height:72px;}
+.form-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.form-actions{display:flex;gap:10px;margin-top:22px;justify-content:flex-end;border-top:1px solid var(--line);padding-top:18px;}
+.btn-cancel{padding:9px 20px;background:var(--white);border:2px solid var(--ink);color:var(--ink);font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:0.1em;cursor:pointer;transition:background 0.12s;}
+.btn-cancel:hover{background:var(--off);}
+.btn-save{padding:9px 24px;background:var(--ink);border:2px solid var(--ink);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:0.1em;cursor:pointer;transition:background 0.12s;}
+.btn-save:hover{background:var(--red);border-color:var(--red);}
+.img-upload-area{border:2px dashed var(--line);padding:20px;text-align:center;cursor:pointer;transition:border-color 0.12s;background:var(--off);}
+.img-upload-area:hover{border-color:var(--red);}
+.img-upload-area input{display:none;}
+.img-preview-thumb{width:100%;height:90px;object-fit:cover;margin-top:10px;display:none;border:1px solid var(--line);}
+.swatches{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
+.sw{width:26px;height:26px;cursor:pointer;border:2px solid transparent;transition:transform 0.1s;}
+.sw:hover{transform:scale(1.15);}
+.sw.on{border-color:var(--ink);outline:2px solid var(--white);outline-offset:-4px;}
+@media(max-width:680px){nav{width:56px;}.nav-issue,.nav-section-lbl,.nav-item span,.nav-footer{display:none;}main{margin-left:56px;}.topbar,.content{padding:16px;}.topbar-en{font-size:24px;}.dash-row{grid-template-columns:1fr 1fr;}.cards-grid{grid-template-columns:1fr 1fr;}.form-2{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-masthead"><div class="nav-title">FILM<br>LOG</div><div class="nav-issue">Personal Archive</div></div>
+  <div class="nav-section"><div class="nav-section-lbl">Overview</div><div class="nav-item active" onclick="goNav('dashboard')"><div class="nav-dot"></div><span>儀表板</span></div></div>
+  <div class="nav-section"><div class="nav-section-lbl">Gear</div><div class="nav-item" onclick="goNav('cameras')"><div class="nav-dot"></div><span>相機庫</span></div></div>
+  <div class="nav-section"><div class="nav-section-lbl">Film</div><div class="nav-item" onclick="goNav('films')"><div class="nav-dot"></div><span>底片庫</span></div><div class="nav-item" onclick="goNav('rolls')"><div class="nav-dot"></div><span>膠卷記錄</span></div></div>
+  <div class="nav-footer"><div class="nav-stats"><div class="nav-stat"><span>相機</span><span class="nav-stat-val" id="ns-cam">—</span></div><div class="nav-stat"><span>底片</span><span class="nav-stat-val" id="ns-film">—</span></div><div class="nav-stat"><span>膠卷</span><span class="nav-stat-val" id="ns-roll">—</span></div></div></div>
+</nav>
+<main>
+  <div class="page active" id="page-dashboard">
+    <div class="topbar"><div class="topbar-left"><div class="topbar-en">DASHBOARD</div><div class="topbar-zh">攝影器材全覽</div></div><div class="topbar-right"></div></div>
+    <div class="content">
+      <div class="dash-hero"><div><div class="dash-hero-label">器材總投入</div><div class="dash-hero-value" id="d-total">NT$ 0</div><div class="dash-hero-sub" id="d-sub">相機 + 底片庫存花費</div></div><div class="dash-hero-right"><div class="dash-hero-avg-label">相機平均單價</div><div class="dash-hero-avg" id="d-avg">NT$ 0</div></div></div>
+      <div class="dash-row"><div class="dash-cell"><div class="dash-cell-label">相機</div><div class="dash-cell-value" id="d-cameras">0</div><div class="dash-cell-sub" id="d-active">使用中 0 台</div></div><div class="dash-cell"><div class="dash-cell-label">底片種類</div><div class="dash-cell-value" id="d-films">0</div><div class="dash-cell-sub" id="d-stock">庫存 0 卷</div></div><div class="dash-cell" style="border-right:none"><div class="dash-cell-label">膠卷記錄</div><div class="dash-cell-value" id="d-rolls">0</div><div class="dash-cell-sub" id="d-frames">共 0 張</div></div></div>
+      <div class="dash-section-title">RECENT ROLLS</div>
+      <div id="d-recent"></div>
+    </div>
+  </div>
+  <div class="page" id="page-cameras">
+    <div class="topbar"><div class="topbar-left"><div class="topbar-en">CAMERAS</div><div class="topbar-zh">相機庫 — 點圖片可上傳照片</div></div><div class="topbar-right"><button class="btn-add" onclick="openOv('camera')">+ NEW CAMERA</button></div></div>
+    <div class="content"><div class="section-header"><span class="section-count" id="cam-count">0 ITEMS</span></div><div class="cards-grid" id="cameras-grid"></div></div>
+  </div>
+  <div class="page" id="page-films">
+    <div class="topbar"><div class="topbar-left"><div class="topbar-en">FILM STOCK</div><div class="topbar-zh">底片庫 — 記錄種類與庫存</div></div><div class="topbar-right"><button class="btn-add" onclick="openOv('film')">+ NEW FILM</button></div></div>
+    <div class="content"><div class="section-header"><span class="section-count" id="film-count">0 ITEMS</span></div><div class="cards-grid" id="films-grid"></div></div>
+  </div>
+  <div class="page" id="page-rolls">
+    <div class="topbar"><div class="topbar-left"><div class="topbar-en">ROLL LOG</div><div class="topbar-zh">膠卷記錄</div></div><div class="topbar-right"><button class="btn-add" onclick="openOv('roll')">+ NEW ROLL</button></div></div>
+    <div class="content"><div class="roll-wrap"><table class="roll-table"><thead><tr><th style="width:50px">No.</th><th>底片 / 備注</th><th>相機</th><th>日期</th><th>張數</th><th>狀態</th><th style="width:40px"></th></tr></thead><tbody id="rolls-body"></tbody></table></div></div>
+  </div>
+</main>
+
+<div class="overlay" id="overlay-camera">
+  <div class="overlay-box">
+    <div class="overlay-title">NEW CAMERA</div>
+    <div class="form-2"><div class="form-g"><label class="form-l">品牌</label><input class="form-i" id="c-brand" placeholder="e.g. Nikon"></div><div class="form-g"><label class="form-l">型號</label><input class="form-i" id="c-model" placeholder="e.g. FM2"></div></div>
+    <div class="form-2"><div class="form-g"><label class="form-l">類型</label><select class="form-s" id="c-type"><option>SLR 單眼</option><option>RF 旁軸</option><option>TLR 雙眼</option><option>Point & Shoot</option><option>中片幅</option><option>大片幅</option><option>即可拍</option></select></div><div class="form-g"><label class="form-l">狀態</label><select class="form-s" id="c-status"><option value="active">使用中</option><option value="shelf">收藏中</option></select></div></div>
+    <div class="form-2"><div class="form-g"><label class="form-l">鏡頭</label><input class="form-i" id="c-lens" placeholder="e.g. 50mm f/1.4"></div><div class="form-g"><label class="form-l">片幅</label><select class="form-s" id="c-format"><option>35mm</option><option>120</option><option>即可拍</option><option>4x5</option></select></div></div>
+    <div class="form-g"><label class="form-l">購入價格（NT$）</label><input class="form-i" id="c-price" type="number" placeholder="0"></div>
+    <div class="form-g"><label class="form-l">相機照片</label><div class="img-upload-area" onclick="document.getElementById('c-img-in').click()"><div style="font-size:11px;color:var(--ink3);letter-spacing:0.1em">CLICK TO UPLOAD</div><input type="file" id="c-img-in" accept="image/*" onchange="prevImg(this,'c-img-prev')"><img id="c-img-prev" class="img-preview-thumb"></div></div>
+    <div class="form-g"><label class="form-l">備注</label><textarea class="form-ta" id="c-note" placeholder="購入年份、特色、心得..."></textarea></div>
+    <div class="form-actions"><button class="btn-cancel" onclick="closeOv()">CANCEL</button><button class="btn-save" onclick="saveCam()">SAVE</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay-film">
+  <div class="overlay-box">
+    <div class="overlay-title">NEW FILM</div>
+    <div class="form-2"><div class="form-g"><label class="form-l">品牌</label><input class="form-i" id="f-brand" placeholder="e.g. Kodak"></div><div class="form-g"><label class="form-l">型號</label><input class="form-i" id="f-name" placeholder="e.g. Portra 400"></div></div>
+    <div class="form-2"><div class="form-g"><label class="form-l">ISO</label><input class="form-i" id="f-iso" type="number" placeholder="400"></div><div class="form-g"><label class="form-l">類型</label><select class="form-s" id="f-type"><option value="color">彩色負片</option><option value="bw">黑白</option><option value="slide">正片</option><option value="instant">即可拍</option></select></div></div>
+    <div class="form-2"><div class="form-g"><label class="form-l">庫存數量</label><input class="form-i" id="f-stock" type="number" placeholder="0"></div><div class="form-g"><label class="form-l">購入單價（NT$）</label><input class="form-i" id="f-price" type="number" placeholder="0"></div></div>
+    <div class="form-g"><label class="form-l">封面圖片</label><div class="img-upload-area" onclick="document.getElementById('f-img-in').click()"><div style="font-size:11px;color:var(--ink3);letter-spacing:0.1em">CLICK TO UPLOAD</div><input type="file" id="f-img-in" accept="image/*" onchange="prevImg(this,'f-img-prev')"><img id="f-img-prev" class="img-preview-thumb"></div></div>
+    <div class="form-g"><label class="form-l">卡片顏色（無圖時顯示）</label><div class="swatches"><div class="sw on" style="background:#c8952a" data-c="#c8952a" onclick="pickSw(this)"></div><div class="sw" style="background:#e8291c" data-c="#e8291c" onclick="pickSw(this)"></div><div class="sw" style="background:#1a1a2e" data-c="#1a1a2e" onclick="pickSw(this)"></div><div class="sw" style="background:#2d6a4f" data-c="#2d6a4f" onclick="pickSw(this)"></div><div class="sw" style="background:#4a3f6b" data-c="#4a3f6b" onclick="pickSw(this)"></div><div class="sw" style="background:#111111" data-c="#111111" onclick="pickSw(this)"></div><div class="sw" style="background:#8b7355" data-c="#8b7355" onclick="pickSw(this)"></div><div class="sw" style="background:#c9184a" data-c="#c9184a" onclick="pickSw(this)"></div></div></div>
+    <div class="form-actions"><button class="btn-cancel" onclick="closeOv()">CANCEL</button><button class="btn-save" onclick="saveFilm()">SAVE</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay-roll">
+  <div class="overlay-box">
+    <div class="overlay-title">NEW ROLL</div>
+    <div class="form-2"><div class="form-g"><label class="form-l">底片</label><input class="form-i" id="r-film" placeholder="e.g. Portra 400"></div><div class="form-g"><label class="form-l">相機</label><input class="form-i" id="r-cam" placeholder="e.g. Nikon FM2"></div></div>
+    <div class="form-2"><div class="form-g"><label class="form-l">拍攝日期</label><input class="form-i" id="r-date" type="date"></div><div class="form-g"><label class="form-l">張數</label><input class="form-i" id="r-frames" type="number" placeholder="36"></div></div>
+    <div class="form-g"><label class="form-l">沖洗狀態</label><select class="form-s" id="r-dev"><option value="pending">尚未沖洗</option><option value="done">已沖洗</option><option value="scan">已掃描</option></select></div>
+    <div class="form-g"><label class="form-l">備注 / 主題</label><textarea class="form-ta" id="r-note" placeholder="地點、主題、心得..."></textarea></div>
+    <div class="form-actions"><button class="btn-cancel" onclick="closeOv()">CANCEL</button><button class="btn-save" onclick="saveRoll()">SAVE</button></div>
+  </div>
+</div>
+
+<script>
+const STORE='filmlog-v3';
+function defaultData(){return{cameras:[{brand:'Nikon',model:'FM2',type:'SLR 單眼',status:'active',lens:'50mm f/1.4 AI-S',format:'35mm',price:8500,note:'全機械快門',img:''},{brand:'Contax',model:'T2',type:'Point & Shoot',status:'active',lens:'38mm f/2.8',format:'35mm',price:22000,note:'隨身機首選',img:''},{brand:'Hasselblad',model:'500CM',type:'中片幅',status:'shelf',lens:'80mm f/2.8',format:'120',price:38000,note:'拍人像使用',img:''}],films:[{brand:'Kodak',name:'Portra 400',iso:'400',type:'color',stock:5,price:280,color:'#c8952a',img:''},{brand:'Ilford',name:'HP5 Plus',iso:'400',type:'bw',stock:3,price:220,color:'#111111',img:''},{brand:'Fujifilm',name:'Velvia 50',iso:'50',type:'slide',stock:2,price:350,color:'#1a1a2e',img:''},{brand:'Kodak',name:'Gold 200',iso:'200',type:'color',stock:0,price:180,color:'#c8952a',img:''}],rolls:[{film:'Kodak Portra 400',camera:'Nikon FM2',date:'2025-03-10',frames:36,dev:'scan',note:'台北街拍'},{film:'Ilford HP5 Plus',camera:'Nikon FM2',date:'2025-01-15',frames:36,dev:'scan',note:'九份夜景'},{film:'Fujifilm Velvia 50',camera:'Hasselblad 500CM',date:'2025-02-20',frames:12,dev:'done',note:'陽明山花卉'},{film:'Kodak Gold 200',camera:'Contax T2',date:'2025-03-22',frames:36,dev:'pending',note:'日常隨拍'}]};}
+let data;try{data=JSON.parse(localStorage.getItem(STORE))||defaultData();}catch(e){data=defaultData();}
+function save(){try{localStorage.setItem(STORE,JSON.stringify(data));}catch(e){}}
+let pickedColor='#c8952a';
+function goNav(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));document.getElementById('page-'+id).classList.add('active');const map={dashboard:0,cameras:1,films:2,rolls:3};document.querySelectorAll('.nav-item')[map[id]].classList.add('active');render();}
+function render(){rDash();rCams();rFilms();rRolls();rNav();}
+function rDash(){const camCost=data.cameras.reduce((s,c)=>s+(+c.price||0),0);const filmCost=data.films.reduce((s,f)=>s+(+f.price||0)*(+f.stock||0),0);const total=camCost+filmCost;const active=data.cameras.filter(c=>c.status==='active').length;const stock=data.films.reduce((s,f)=>s+(+f.stock||0),0);const frames=data.rolls.reduce((s,r)=>s+(+r.frames||36),0);document.getElementById('d-total').textContent='NT$ '+total.toLocaleString();document.getElementById('d-sub').textContent='相機 NT$'+camCost.toLocaleString()+' + 底片庫存 NT$'+filmCost.toLocaleString();document.getElementById('d-avg').textContent=data.cameras.length?'NT$ '+Math.round(camCost/data.cameras.length).toLocaleString():'NT$ 0';document.getElementById('d-cameras').textContent=data.cameras.length;document.getElementById('d-active').textContent='使用中 '+active+' 台';document.getElementById('d-films').textContent=data.films.length;document.getElementById('d-stock').textContent='庫存 '+stock+' 卷';document.getElementById('d-rolls').textContent=data.rolls.length;document.getElementById('d-frames').textContent='共 '+frames+' 張';const dm={pending:['尚未沖洗','dev-pending'],done:['已沖洗','dev-done'],scan:['已掃描','dev-scan']};const recent=[...data.rolls].reverse().slice(0,5);document.getElementById('d-recent').innerHTML=recent.length?'<div class="roll-wrap"><table class="roll-table"><thead><tr><th>No.</th><th>底片</th><th>相機</th><th>日期</th><th>狀態</th></tr></thead><tbody>'+recent.map(r=>{const[l,c]=dm[r.dev]||['—','dev-pending'];return'<tr><td class="roll-no">'+String(data.rolls.indexOf(r)+1).padStart(2,'0')+'</td><td><div class="roll-film-name">'+r.film+'</div>'+(r.note?'<div class="roll-film-note">'+r.note+'</div>':'')+'</td><td style="color:var(--ink3)">'+r.camera+'</td><td style="color:var(--ink3);white-space:nowrap;font-size:12px">'+(r.date||'—')+'</td><td><span class="dev-tag '+c+'">'+l+'</span></td></tr>';}).join('')+'</tbody></table></div>':'<div style="color:var(--ink3);font-size:12px;padding:16px 0;letter-spacing:0.08em">尚無膠卷記錄</div>';}
+function rCams(){document.getElementById('cam-count').textContent=data.cameras.length+' ITEMS';const g=document.getElementById('cameras-grid');if(!data.cameras.length){g.innerHTML='<div class="empty-state"><div class="empty-state-title">NO CAMERAS YET</div><div class="empty-state-sub">點右上角新增你的第一台相機</div></div>';return;}g.innerHTML=data.cameras.map((c,i)=>'<div class="camera-card"><button class="card-del" onclick="delIt(\'cameras\','+i+')">x</button><div class="cam-img" onclick="upImg(\'cameras\','+i+')">'+(c.img?'<img src="'+c.img+'">':`<div class="cam-img-ph"><div class="cam-img-ph-icon">PHOTO</div><div>${c.brand}</div></div>`)+'<div class="img-hover-label">CHANGE PHOTO</div></div><div class="cam-body"><div class="cam-type-row"><span class="cam-type">'+c.type+' · '+c.format+'</span><span class="status-pill '+(c.status==='active'?'status-active':'status-shelf')+'">'+(c.status==='active'?'IN USE':'SHELF')+'</span></div><div class="cam-name">'+c.brand+' '+c.model+'</div>'+(c.lens?'<div class="cam-spec-row"><span class="cam-spec-k">Lens</span><span class="cam-spec-v">'+c.lens+'</span></div>':'')+(c.note?'<div class="cam-spec-row"><span class="cam-spec-k">Note</span><span class="cam-spec-v" style="font-size:11px">'+c.note+'</span></div>':'')+(c.price?'<div class="cam-price">NT$ '+parseInt(c.price).toLocaleString()+'</div>':'')+'</div></div>').join('');}
+function rFilms(){document.getElementById('film-count').textContent=data.films.length+' ITEMS';const g=document.getElementById('films-grid');const tM={color:['彩色','tag-color'],bw:['黑白','tag-bw'],slide:['正片','tag-slide'],instant:['即可拍','tag-instant']};if(!data.films.length){g.innerHTML='<div class="empty-state"><div class="empty-state-title">NO FILM STOCK YET</div><div class="empty-state-sub">點右上角新增底片</div></div>';return;}g.innerHTML=data.films.map((f,i)=>{const[tl,tc]=tM[f.type]||['彩色','tag-color'];return'<div class="film-card"><button class="card-del" onclick="delIt(\'films\','+i+')">x</button><div class="film-img" onclick="upImg(\'films\','+i+')">'+(f.img?'<img src="'+f.img+'"><div class="img-hover-label">CHANGE PHOTO</div>':'<div class="film-color-ph" style="background:'+f.color+'"><div class="film-color-name">'+f.name+'</div><div class="film-color-brand">'+f.brand+'</div></div><div class="img-hover-label">ADD PHOTO</div>')+'</div><div class="film-body"><div class="film-tags"><span class="film-tag '+tc+'">'+tl+'</span><span style="font-size:10px;color:var(--ink3);letter-spacing:0.1em">ISO '+f.iso+'</span></div><div class="film-name">'+f.name+'</div><div class="film-meta">'+f.brand+'</div><div class="film-footer"><span class="film-stock'+(+f.stock?'':' zero')+'">'+(+f.stock?'剩 '+f.stock+' 卷':'SOLD OUT')+'</span>'+(f.price?'<span class="film-price-sm">NT$ '+parseInt(f.price)+'/卷</span>':'')+'</div></div></div>';}).join('');}
+function rRolls(){const dm={pending:['尚未沖洗','dev-pending'],done:['已沖洗','dev-done'],scan:['已掃描','dev-scan']};document.getElementById('rolls-body').innerHTML=data.rolls.length?data.rolls.map((r,i)=>{const[l,c]=dm[r.dev]||['—','dev-pending'];return'<tr><td class="roll-no">'+String(i+1).padStart(2,'0')+'</td><td><div class="roll-film-name">'+r.film+'</div>'+(r.note?'<div class="roll-film-note">'+r.note+'</div>':'')+'</td><td style="color:var(--ink3)">'+r.camera+'</td><td style="color:var(--ink3);white-space:nowrap;font-size:12px">'+(r.date||'—')+'</td><td style="font-weight:500">'+(r.frames||36)+'</td><td><span class="dev-tag '+c+'">'+l+'</span></td><td><button class="del-row" onclick="delIt(\'rolls\','+i+')">x</button></td></tr>';}).join(''):'<tr><td colspan="7" style="padding:32px;text-align:center;color:var(--ink3);font-size:12px;letter-spacing:0.1em">NO ROLLS YET</td></tr>';}
+function rNav(){document.getElementById('ns-cam').textContent=data.cameras.length+' 台';document.getElementById('ns-film').textContent=data.films.length+' 種';document.getElementById('ns-roll').textContent=data.rolls.length+' 卷';}
+function upImg(type,idx){const inp=document.createElement('input');inp.type='file';inp.accept='image/*';inp.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{data[type][idx].img=ev.target.result;save();render();};r.readAsDataURL(f);};inp.click();}
+function prevImg(inp,pid){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{const im=document.getElementById(pid);im.src=e.target.result;im.style.display='block';};r.readAsDataURL(f);}
+function getImg(id){const el=document.getElementById(id);return el&&el.style.display!=='none'&&el.src.startsWith('data:')?el.src:'';}
+function pickSw(el){document.querySelectorAll('.sw').forEach(s=>s.classList.remove('on'));el.classList.add('on');pickedColor=el.dataset.c;}
+function openOv(t){document.getElementById('overlay-'+t).classList.add('show');}
+function closeOv(){document.querySelectorAll('.overlay').forEach(o=>o.classList.remove('show'));}
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)closeOv();}));
+function saveCam(){data.cameras.push({brand:document.getElementById('c-brand').value||'未命名',model:document.getElementById('c-model').value||'',type:document.getElementById('c-type').value,status:document.getElementById('c-status').value,lens:document.getElementById('c-lens').value,format:document.getElementById('c-format').value,price:document.getElementById('c-price').value,note:document.getElementById('c-note').value,img:getImg('c-img-prev')});save();render();closeOv();['c-brand','c-model','c-lens','c-price','c-note'].forEach(id=>document.getElementById(id).value='');const p=document.getElementById('c-img-prev');p.src='';p.style.display='none';}
+function saveFilm(){data.films.push({brand:document.getElementById('f-brand').value||'未命名',name:document.getElementById('f-name').value||'',iso:document.getElementById('f-iso').value,type:document.getElementById('f-type').value,stock:document.getElementById('f-stock').value||0,price:document.getElementById('f-price').value,color:pickedColor,img:getImg('f-img-prev')});save();render();closeOv();['f-brand','f-name','f-iso','f-stock','f-price'].forEach(id=>document.getElementById(id).value='');const p=document.getElementById('f-img-prev');p.src='';p.style.display='none';}
+function saveRoll(){data.rolls.push({film:document.getElementById('r-film').value||'未命名',camera:document.getElementById('r-cam').value||'',date:document.getElementById('r-date').value,frames:document.getElementById('r-frames').value||36,dev:document.getElementById('r-dev').value,note:document.getElementById('r-note').value});save();render();closeOv();['r-film','r-cam','r-date','r-frames','r-note'].forEach(id=>document.getElementById(id).value='');}
+function delIt(type,idx){if(!confirm('確定刪除？'))return;data[type].splice(idx,1);save();render();}
+render();
+</script>
+</body>
+</html>
